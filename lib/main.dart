@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/home.dart';
+import 'package:testing/pages/home.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
