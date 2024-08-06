@@ -73,91 +73,91 @@ class _TestState extends State<Test> {
   }
 }
 
-class NewsHeader extends StatelessWidget {
-  const NewsHeader({
-    super.key,
-    required this.height,
-    required this.width,
-  });
+// class NewsHeader extends StatelessWidget {
+//   const NewsHeader({
+//     super.key,
+//     required this.height,
+//     required this.width,
+//   });
 
-  final double height;
-  final double width;
+//   final double height;
+//   final double width;
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(children: [
-      Card(
-        child: Container(
-          height: height * 0.6,
-          width: width * 0.8,
-          decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(15),
-              image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg"))),
-        ),
-      ),
-      Positioned(
-          bottom: 110,
-          left: width * 0.12,
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            height: height * 0.2,
-            width: width * 0.6,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(48, 255, 255, 255),
-                // border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.circular(15)),
-          )),
-      Positioned(
-          bottom: 100,
-          left: width * 0.1,
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            height: height * 0.2,
-            width: width * 0.6,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(62, 255, 255, 255),
-                // border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.circular(15)),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Tesla Full Self-Driving data makes Elon Musk reduce expectations',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Divider(
-                  color: Colors.black,
-                  thickness: 2.5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'BBC.com',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 9, 78, 135)),
-                    ),
-                    Text(
-                      '2024-08-01',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ))
-    ]);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(children: [
+//       Card(
+//         child: Container(
+//           height: height * 0.6,
+//           width: width * 0.8,
+//           decoration: BoxDecoration(
+//               color: Colors.grey,
+//               borderRadius: BorderRadius.circular(15),
+//               image: const DecorationImage(
+//                   fit: BoxFit.cover,
+//                   image: NetworkImage(
+//                       "https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg"))),
+//         ),
+//       ),
+//       Positioned(
+//           bottom: 110,
+//           left: width * 0.12,
+//           child: Container(
+//             padding: const EdgeInsets.all(15),
+//             height: height * 0.2,
+//             width: width * 0.6,
+//             decoration: BoxDecoration(
+//                 color: const Color.fromARGB(48, 255, 255, 255),
+//                 // border: Border.all(color: Colors.black, width: 2),
+//                 borderRadius: BorderRadius.circular(15)),
+//           )),
+//       Positioned(
+//           bottom: 100,
+//           left: width * 0.1,
+//           child: Container(
+//             padding: const EdgeInsets.all(15),
+//             height: height * 0.2,
+//             width: width * 0.6,
+//             decoration: BoxDecoration(
+//                 color: const Color.fromARGB(62, 255, 255, 255),
+//                 // border: Border.all(color: Colors.black, width: 2),
+//                 borderRadius: BorderRadius.circular(15)),
+//             child: const Column(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Text(
+//                   'Tesla Full Self-Driving data makes Elon Musk reduce expectations',
+//                   style: TextStyle(
+//                     fontSize: 20,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//                 Divider(
+//                   color: Colors.black,
+//                   thickness: 2.5,
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Text(
+//                       'BBC.com',
+//                       style: TextStyle(
+//                           fontSize: 15,
+//                           fontWeight: FontWeight.w700,
+//                           color: Color.fromARGB(255, 9, 78, 135)),
+//                     ),
+//                     Text(
+//                       '2024-08-01',
+//                       style: TextStyle(
+//                         fontSize: 15,
+//                         fontWeight: FontWeight.w700,
+//                       ),
+//                     )
+//                   ],
+//                 )
+//               ],
+//             ),
+//           ))
+//     ]);
+//   }
+// }

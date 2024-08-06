@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testing/screens/temp.dart';
 import 'package:testing/screens/test.dart';
 
 void main() {
