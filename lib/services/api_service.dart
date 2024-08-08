@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:testing/models/news_model.dart';
 
 class APIService {
+
   final String apiURL =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=626e0e40c01c4427b5b7a628762b6efa";
 

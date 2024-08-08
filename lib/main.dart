@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testing/screens/test.dart';
+import 'package:testing/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
       title: 'API Calls',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(43, 211, 211, 225)),
+            seedColor: Color.fromARGB(50, 87, 82, 82)),
         useMaterial3: true,
       ),
-      home: const Test(),
+      home: const Home(),
     );
   }
 }

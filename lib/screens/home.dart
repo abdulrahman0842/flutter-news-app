@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:testing/models/news_model.dart';
 import 'package:testing/screens/article.dart';
 import 'package:testing/services/api_service.dart';
+import 'package:testing/widgets/horizontal_news_header.dart';
+
+import '../widgets/vertical_news_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +15,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List categories = [
+    'business',
+    'entertainment',
+    'general',
+    'health',
+    'science',
+    'sports',
+    'technology'
+  ];
+
   NewsModel? news;
   bool isLoading = true;
   String errorMessage = '';
@@ -40,53 +53,43 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // double sheight = MediaQuery.sizeOf(context).height;
-    // double swidth = MediaQuery.sizeOf(context).width;
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'WH NEWS',
-            style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        body: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : verticalListNews());
-  }
-
-  Widget verticalListNews() {
-    return ListView.builder(
-        itemCount: news!.totalResults,
-        itemBuilder: (context, index) {
-          Articles article = news!.articles![index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Article(article: article),
-                  ));
-            },
-            child: Card(
-              margin: const EdgeInsets.all(8),
-              elevation: 4,
-              child: Column(children: [
-                Image.network(article.urlToImage ??
-                    'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'),
-                ListTile(
-                  title: Text(
-                    article.title ?? "No Title",
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+        backgroundColor: const Color.fromARGB(122, 211, 211, 225),
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 50,
+                  child: Text(
+                    'Top Headlines',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
                   ),
                 ),
-              ]),
+                const SizedBox(
+                  height: 5,
+                ),
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : HorizontalNewsHeader(
+                        height: height, width: width, news: news!),
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : SizedBox(
+                        height: height * 2,
+                        child: VerticalNewsCard(news: news!))
+              ],
             ),
-          );
-        });
-    // }
+          ),
+        )));
   }
 }
