@@ -37,16 +37,25 @@ class _HomeState extends State<Home> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    fetchNews();
+  }
+
+  Future fetchNews() async {
+    return await NewsViewModel().fetchNewsChannelHeadline(name);
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        backgroundColor: const Color.fromARGB(111, 111, 111, 158),
+        backgroundColor: Color.fromARGB(255, 62, 62, 90),
         appBar: _buildAppBar(),
         body: _buildUI(height, width));
   }
-
   AppBar _buildAppBar() {
     return AppBar(
       centerTitle: true,
@@ -78,7 +87,7 @@ class _HomeState extends State<Home> {
               if (FilterList.arynews.name == item.name) {
                 name = 'ary-news';
               }
-              setState(() {});
+              fetchNews();
             },
             itemBuilder: (context) => <PopupMenuEntry<FilterList>>[
                   const PopupMenuItem(
@@ -106,7 +115,6 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.transparent,
     );
   }
-
   SafeArea _buildUI(double height, double width) {
     return SafeArea(
         child: Padding(
@@ -130,7 +138,7 @@ class _HomeState extends State<Home> {
             height: height * 0.5,
             width: width * 0.99,
             child: FutureBuilder(
-                future: newsViewModel.fetchNewsChannelHeadline(name),
+                future: fetchNews(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -140,14 +148,16 @@ class _HomeState extends State<Home> {
                     return Center(
                       child: Text(snapshot.error.toString()),
                     );
-                  } else if (snapshot.data!.articles!.isEmpty) {
+                  } 
+                  else if (snapshot.data!.articles!.isEmpty) {
                     return const Center(
                       child: Text(
                         'Currently not available.\nChange the Publisher',
                         style: TextStyle(color: Colors.white),
                       ),
                     );
-                  } else {
+                  } 
+                  else {
                     return HorizontalNewsHeader(
                         height: height, width: width, news: snapshot.data!);
                   }

@@ -25,7 +25,7 @@ class VerticalNewsCard extends StatelessWidget {
           itemBuilder: (context, index) {
             Articles article = news!.articles![index];
             String publishedAtFormated =
-                Home().parseDate(article.publishedAt ?? 'Null');
+                const Home().parseDate(article.publishedAt ?? 'Null');
             return InkWell(
               onTap: () {
                 Navigator.push(

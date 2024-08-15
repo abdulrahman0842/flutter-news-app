@@ -34,11 +34,12 @@ class ArticlePage extends StatelessWidget {
                         'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
           ),
           Positioned(
-            top: height * 0.35,
+            top: height * 0.38,
             child: Container(
               padding: const EdgeInsets.all(9),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                  color: const Color.fromARGB(255, 62, 62, 90),
+                  borderRadius: BorderRadius.circular(20)),
               height: height * 0.9,
               width: width,
               child: Column(
@@ -53,12 +54,14 @@ class ArticlePage extends StatelessWidget {
                         fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height * 0.01),
-                  Text(date),
+                  Text(date,
+                    style: const TextStyle( fontWeight: FontWeight.w200),
+                  ),
                   SizedBox(height: height * 0.005),
                   Text(
                     article.content ?? 'Null',
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w500),
+                        fontSize: 18, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),

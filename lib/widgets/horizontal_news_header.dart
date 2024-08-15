@@ -21,13 +21,19 @@ class HorizontalNewsHeader extends StatelessWidget {
       itemCount: news.articles!.length,
       itemBuilder: (context, index) {
         Articles article = news.articles![index];
-        String publishedAtFormated = const Home().parseDate(article.publishedAt??'Null');
+        String publishedAtFormated =
+            const Home().parseDate(article.publishedAt ?? 'Null');
         return InkWell(
           onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ArticlePage(article:article, height: height, width: width, date: publishedAtFormated,),
+                  builder: (context) => ArticlePage(
+                    article: article,
+                    height: height,
+                    width: width,
+                    date: publishedAtFormated,
+                  ),
                 ));
           },
           child: Card(
@@ -68,8 +74,9 @@ class HorizontalNewsHeader extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(article.source!.name ?? 'Unknown',
-                                  style: const TextStyle(color: Colors.white)),
+                              Text(article.author ?? 'Unknown',
+                                  style:
+                                      const TextStyle(color: Colors.white)),
                               Text(publishedAtFormated,
                                   style: const TextStyle(color: Colors.white))
                             ],
