@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'API Calls',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Color.fromARGB(50, 87, 82, 82)),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
       home: const Home(),
