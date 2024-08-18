@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:testing/provider/custom_theme.dart';
 import 'package:testing/provider/news_provider.dart';
+import 'package:testing/screens/category_page.dart';
 import 'package:testing/screens/home.dart';
 import 'package:provider/provider.dart';
+import 'package:testing/screens/test.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(create: (context) => NewsProvider(),
-  child: const MyApp()
-  ));
+  runApp(ChangeNotifierProvider(
+      create: (context) => NewsProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,14 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'API Calls',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 255, 255, 255),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      home: const Home(),
+      theme: MyTheme.lightTheme,
+      home: const Test(),
     );
   }
 }

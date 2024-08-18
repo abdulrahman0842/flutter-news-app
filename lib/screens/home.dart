@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:testing/provider/custom_theme.dart';
+import 'package:testing/provider/news_provider.dart';
+import 'package:testing/screens/category_page.dart';
 import 'package:testing/view_model/news_view_model.dart';
 import 'package:testing/widgets/horizontal_news_header.dart';
 import 'package:testing/widgets/vertical_news_card.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,27 +28,6 @@ class _HomeState extends State<Home> {
   NewsViewModel newsViewModel = NewsViewModel();
   FilterList? selectedSource;
   String name = 'bbc-news';
-  ///// unwanted
-
-  List categories = [
-    'business',
-    'entertainment',
-    'general',
-    'health',
-    'science',
-    'sports',
-    'technology'
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchNews();
-  }
-
-  Future fetchNews() async {
-    return await NewsViewModel().fetchNewsChannelHeadline(name);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +35,30 @@ class _HomeState extends State<Home> {
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 62, 62, 90),
+        backgroundColor: MyTheme.lightTheme.canvasColor,
         appBar: _buildAppBar(),
         body: _buildUI(height, width));
   }
+
   AppBar _buildAppBar() {
     return AppBar(
+      backgroundColor: MyTheme.lightTheme.primaryColor,
       centerTitle: true,
       title: const Text('WiH News',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26)),
       actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CategoryPage()));
+            },
+            icon: const Icon(
+              Icons.category_outlined,
+              color: Colors.white,
+            )),
         PopupMenuButton<FilterList>(
             icon: const Icon(
               Icons.filter_list,
@@ -87,7 +83,9 @@ class _HomeState extends State<Home> {
               if (FilterList.arynews.name == item.name) {
                 name = 'ary-news';
               }
-              fetchNews();
+
+              Provider.of<NewsProvider>(context, listen: false)
+                  .fetchNewsChanelHeadline(name);
             },
             itemBuilder: (context) => <PopupMenuEntry<FilterList>>[
                   const PopupMenuItem(
@@ -112,9 +110,9 @@ class _HomeState extends State<Home> {
                   )
                 ])
       ],
-      backgroundColor: Colors.transparent,
     );
   }
+
   SafeArea _buildUI(double height, double width) {
     return SafeArea(
         child: Padding(
@@ -135,36 +133,19 @@ class _HomeState extends State<Home> {
             height: 5,
           ),
           SizedBox(
-            height: height * 0.5,
-            width: width * 0.99,
-            child: FutureBuilder(
-                future: fetchNews(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text(snapshot.error.toString()),
-                    );
-                  } 
-                  else if (snapshot.data!.articles!.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'Currently not available.\nChange the Publisher',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                  } 
-                  else {
-                    return HorizontalNewsHeader(
-                        height: height, width: width, news: snapshot.data!);
-                  }
-                }),
-          ),
+              height: height * 0.5,
+              width: width * 0.99,
+              child:
+                  Consumer<NewsProvider>(builder: (context, provider, child) {
+                final newsModel = provider.newsModel;
+                provider.fetchNewsChanelHeadline(name);
+                return newsModel == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : HorizontalNewsHeader(
+                        height: height, width: width, news: newsModel);
+              })),
           FutureBuilder(
-              future: newsViewModel.fetchCountryHeadline(),
+              future: NewsProvider().fetchCountryHeadline(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

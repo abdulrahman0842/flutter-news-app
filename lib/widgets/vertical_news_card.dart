@@ -36,25 +36,29 @@ class VerticalNewsCard extends StatelessWidget {
                         height: height,
                         width: width,
                         date: publishedAtFormated,
+                        index: index,
                       ),
                     ));
               },
               child: Card(
-                color: Colors.transparent,
+                // color: Colors.transparent,
                 margin: const EdgeInsets.all(4),
                 elevation: 1,
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    height: width * 0.3,
-                    width: width * 0.3,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(article.urlToImage ??
-                                'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+                  Hero(
+                    tag:Key(article.urlToImage ?? 'DefaultImage $index'),
+                    child: Container(
+                      margin: const EdgeInsets.all(8),
+                      height: width * 0.3,
+                      width: width * 0.3,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(article.urlToImage ??
+                                  'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(4),
@@ -68,7 +72,6 @@ class VerticalNewsCard extends StatelessWidget {
                           article.title ?? 'UnAvailable',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: Colors.white),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +83,9 @@ class VerticalNewsCard extends StatelessWidget {
                                   style: const TextStyle(color: Colors.blue)),
                             ),
                             Flexible(
-                              child: Text(publishedAtFormated.substring(0, 10),
-                                  style: const TextStyle(color: Colors.white)),
+                              child: Text(
+                                publishedAtFormated.substring(0, 10),
+                              ),
                             )
                           ],
                         )

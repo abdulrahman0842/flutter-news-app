@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing/models/news_model.dart';
+import 'package:testing/provider/custom_theme.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage(
@@ -7,11 +8,13 @@ class ArticlePage extends StatelessWidget {
       required this.article,
       required this.height,
       required this.width,
-      required this.date});
+      required this.date,
+      required this.index});
   final Articles article;
   final double height;
   final double width;
   final String date;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +26,25 @@ class ArticlePage extends StatelessWidget {
       width: width,
       child: Stack(
         children: [
-          Container(
-            height: height * 0.4,
-            width: width,
-            decoration: BoxDecoration(
-                color: Colors.grey,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(article.urlToImage ??
-                        'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+          Hero(
+            tag: Key(article.urlToImage ?? 'DefaultImage $index'),
+            child: Container(
+              height: height * 0.4,
+              width: width,
+              decoration: BoxDecoration(
+                  color: Colors.grey,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(article.urlToImage ??
+                          'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+            ),
           ),
           Positioned(
             top: height * 0.38,
             child: Container(
               padding: const EdgeInsets.all(9),
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 62, 62, 90),
+                  color: MyTheme.lightTheme.canvasColor,
                   borderRadius: BorderRadius.circular(20)),
               height: height * 0.9,
               width: width,
@@ -54,8 +60,9 @@ class ArticlePage extends StatelessWidget {
                         fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height * 0.01),
-                  Text(date,
-                    style: const TextStyle( fontWeight: FontWeight.w200),
+                  Text(
+                    date,
+                    style: const TextStyle(fontWeight: FontWeight.w200),
                   ),
                   SizedBox(height: height * 0.005),
                   Text(
