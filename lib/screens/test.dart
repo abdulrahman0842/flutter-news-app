@@ -24,20 +24,20 @@ class _TestState extends State<Test> {
     }
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 134, 241, 200),
+      backgroundColor: const Color.fromARGB(255, 134, 241, 200),
       body: PageView(
         controller: pageController,
-        children: [Home(), CategoryPage()],
+        children: [const Home(), const CategoryPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
           onTap: onTapped,
           currentIndex: currentIndex,
           items: [
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Icon(Icons.category), label: 'Category')
           ]),
     );
