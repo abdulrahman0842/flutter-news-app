@@ -4,7 +4,7 @@ import 'package:testing/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
 class NewsProvider with ChangeNotifier {
-  String apiKey = '626e0e40c01c4427b5b7a628762b6efa';
+  String apiKey = '';
 
   NewsModel? _newsModel;
   NewsModel? get newsModel => _newsModel;
