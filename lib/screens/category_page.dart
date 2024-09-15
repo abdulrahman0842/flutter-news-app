@@ -1,66 +1,46 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:testing/provider/custom_theme.dart';
 import 'package:testing/provider/news_provider.dart';
 import 'package:testing/widgets/vertical_news_card.dart';
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({super.key});
+  const CategoryPage({super.key, required this.category});
+  final String category;
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  int _selectedIndex = 0;
-  final List categories = [
-    'General',
-    'Business',
-    'Entertainment',
-    'Health',
-    'Science',
-    'Sports',
-    'Technology'
-  ];
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        backgroundColor: MyTheme.lightTheme.canvasColor,
         appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: MyTheme.lightTheme.primaryColor,
-          title: Text('Read by Category'),
+          title: Text(
+            widget.category,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
         body: _buildUI(height, width));
   }
 
   Column _buildUI(double height, double width) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-              children: List<Widget>.generate(
-                  categories.length,
-                  (index) => Padding(
-                        padding: const EdgeInsets.only(left: 6.0, right: 6),
-                        child: newsCategoryChip(index),
-                      ))),
-        ),
-      ),
-      const Divider(
-        thickness: 2,
-      ),
       Expanded(
           child: FutureBuilder(
-              future:
-                  NewsProvider().fetchCategoryNews(categories[_selectedIndex]),
+              future: NewsProvider().fetchCategoryNews(widget.category),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
+                  log(snapshot.error.toString());
+                  return const Text(
+                      textAlign: TextAlign.center, 'Error has ocurred!');
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const Center(
@@ -76,17 +56,5 @@ class _CategoryPageState extends State<CategoryPage> {
                 }
               }))
     ]);
-  }
-
-  ChoiceChip newsCategoryChip(int index) {
-    return ChoiceChip(
-      label: Text(categories[index]),
-      selected: _selectedIndex == index,
-      onSelected: (bool selected) {
-        setState(() {
-          _selectedIndex = selected ? index : 0;
-        });
-      },
-    );
   }
 }

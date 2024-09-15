@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testing/provider/custom_theme.dart';
 import 'package:testing/provider/news_provider.dart';
-import 'package:testing/screens/category_page.dart';
 import 'package:testing/screens/home.dart';
 import 'package:provider/provider.dart';
-import 'package:testing/screens/test.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'API Calls',
       theme: MyTheme.lightTheme,
-      home: const Test(),
+      home: const Home(),
     );
   }
 }

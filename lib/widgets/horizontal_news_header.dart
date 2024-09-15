@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:testing/models/news_model.dart';
 import 'package:testing/screens/article_page.dart';
 import 'package:testing/screens/home.dart';
@@ -60,7 +59,7 @@ class HorizontalNewsHeader extends StatelessWidget {
           },
           child: Card(
             child: Hero(
-              tag: Key(article.urlToImage ?? 'DefaultImage $index'),
+              tag: Key('${article.urlToImage} $index'),
               child: Container(
                 height: height * 0.55,
                 width: width * 0.75,
@@ -101,12 +100,14 @@ class HorizontalNewsHeader extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Material(
-                                  type: MaterialType.transparency,
-                                  child: Text(article.author ?? 'Unknown',
-                                      overflow: TextOverflow.ellipsis,
-                                      style:
-                                          const TextStyle(color: Colors.white)),
+                                Flexible(
+                                  child: Material(
+                                    type: MaterialType.transparency,
+                                    child: Text(article.author ?? 'Unknown',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                  ),
                                 ),
                                 Material(
                                   type: MaterialType.transparency,

@@ -27,7 +27,7 @@ class ArticlePage extends StatelessWidget {
       child: Stack(
         children: [
           Hero(
-            tag: Key(article.urlToImage ?? 'DefaultImage $index'),
+            tag: Key('${article.urlToImage} $index'),
             child: Container(
               height: height * 0.4,
               width: width,
