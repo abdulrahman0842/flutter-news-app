@@ -43,6 +43,8 @@ class VerticalNewsCard extends StatelessWidget {
                     ));
               },
               child: Card(
+                elevation: 12,
+                margin: EdgeInsets.all(8),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 child: Stack(children: [

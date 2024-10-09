@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testing/models/news_model.dart';
+import 'package:testing/provider/article_localization.dart';
 import 'package:testing/provider/custom_theme.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage(
@@ -15,7 +17,6 @@ class ArticlePage extends StatelessWidget {
   final double width;
   final String date;
   final int index;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +40,18 @@ class ArticlePage extends StatelessWidget {
                           'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
             ),
           ),
+          Positioned(
+              top: 10,
+              left: 5,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 30,
+                  ))),
           Positioned(
             top: height * 0.38,
             child: Container(
@@ -73,7 +86,29 @@ class ArticlePage extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          Positioned(
+              top: height * 0.38,
+              right: 10,
+              child: ValueListenableBuilder(
+                valueListenable:
+                    Hive.box<Articles>('NewsArticles').listenable(),
+                builder: (context, Box<Articles> box, child) {
+                  return IconButton(
+                      onPressed: () {
+                        ArticleLocalization().toggleArticleHive(article);
+                      },
+                      icon: box.containsKey(article.title!.substring(0, 10))
+                          ? const Icon(
+                              Icons.bookmark,
+                              size: 32,
+                            )
+                          : const Icon(
+                              Icons.bookmark_border_outlined,
+                              size: 32,
+                            ));
+                },
+              )),
         ],
       ),
     ))));

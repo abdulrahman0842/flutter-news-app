@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:testing/models/news_model.dart';
 import 'package:testing/provider/custom_theme.dart';
 import 'package:testing/provider/news_provider.dart';
-import 'package:testing/view_model/news_view_model.dart';
+import 'package:testing/screens/book_marked_articles_page.dart';
 import 'package:testing/widgets/categories_banner.dart';
 import 'package:testing/widgets/horizontal_news_header.dart';
 import 'package:testing/widgets/vertical_news_card.dart';
@@ -26,27 +27,27 @@ class Home extends StatefulWidget {
 enum FilterList { aljazeera, bbcnews, ndtv, reuters, arynews }
 
 class _HomeState extends State<Home> {
-  NewsViewModel newsViewModel = NewsViewModel();
   FilterList? selectedSource;
-  String name = 'bbc-news';
 
-  final List categories = [
-    'Business',
-    'Entertainment',
-    'Health',
-    'Science',
-    'Sports',
-    'Technology'
-  ];
+  late Future<NewsModel> countryHeadline;
+
+  String newsSource = 'bbc-news';
+
   @override
   void initState() {
     super.initState();
     getChannelHeadline();
+    countryHeadline = fetchCountryHeadline();
   }
 
   Future<NewsModel> getChannelHeadline() async {
     return await Provider.of<NewsProvider>(context, listen: false)
-        .fetchNewsChanelHeadline(name);
+        .fetchNewsChannelHeadline(newsSource);
+  }
+
+  Future<NewsModel> fetchCountryHeadline() {
+    return Provider.of<NewsProvider>(context, listen: false)
+        .fetchCountryHeadline();
   }
 
   @override
@@ -57,18 +58,48 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: SafeArea(child: _buildUI(height, width)),
-   
+      // drawer: Drawer(
+      //   backgroundColor: MyTheme.lightTheme.primaryColor,
+      //   width: width * 0.75,
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: [
+      //       Container(
+      //         height: height * 0.3,
+      //         decoration: const BoxDecoration(
+      //             color: Colors.blue,
+      //             image: DecorationImage(
+      //                 image: AssetImage('assets/images/profile.jpg'))),
+      //       ),
+      //       const Text('Abdul Rahman',
+      //           style: TextStyle(
+      //               fontSize: 23,
+      //               fontWeight: FontWeight.bold,
+      //               color: Colors.white))
+      //     ],
+      //   ),
+      // ),
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
+      iconTheme: const IconThemeData(color: Colors.white),
       backgroundColor: MyTheme.lightTheme.primaryColor,
       centerTitle: true,
-      title: const Text('Daily News',
+      title: const Text('NewsVibe',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26)),
-      actions: [filterChannelPopUpMenu()],
+      actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const BookMarkedArticlesPage()));
+            },
+            icon: const Icon(Icons.bookmark))
+      ],
     );
   }
 
@@ -76,28 +107,30 @@ class _HomeState extends State<Home> {
     return PopupMenuButton<FilterList>(
         icon: const Icon(
           Icons.filter_list,
-          color: Colors.white,
+          color: Colors.black,
         ),
         initialValue: selectedSource,
         popUpAnimationStyle: AnimationStyle(curve: Curves.easeInOut),
         onSelected: (item) {
-          name = item.name;
-          if (FilterList.aljazeera.name == item.name) {
-            name = 'al-jazeera-english';
+          if (newsSource != item.name) {
+            if (FilterList.aljazeera == item) {
+              newsSource = 'al-jazeera-english';
+            }
+            if (FilterList.bbcnews == item) {
+              newsSource = 'bbc-news';
+            }
+            if (FilterList.ndtv == item) {
+              newsSource = 'ndtv';
+            }
+            if (FilterList.reuters == item) {
+              newsSource = 'reuters';
+            }
+            if (FilterList.arynews == item) {
+              newsSource = 'ary-news';
+            }
+
+            getChannelHeadline();
           }
-          if (FilterList.bbcnews.name == item.name) {
-            name = 'bbc-news';
-          }
-          if (FilterList.ndtv.name == item.name) {
-            name = 'ndtv';
-          }
-          if (FilterList.reuters == item.name) {
-            name = 'reuters';
-          }
-          if (FilterList.arynews.name == item.name) {
-            name = 'ary-news';
-          }
-          getChannelHeadline();
         },
         itemBuilder: (context) => <PopupMenuEntry<FilterList>>[
               const PopupMenuItem(
@@ -145,12 +178,18 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Top Headlines',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Top Headlines',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                filterChannelPopUpMenu()
+              ],
             ),
             const SizedBox(
               height: 5,
@@ -160,30 +199,40 @@ class _HomeState extends State<Home> {
                 width: width * 0.99,
                 child: Consumer<NewsProvider>(
                     builder: ((context, provider, child) {
-                  if (provider.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final newsModel = provider.newsModel;
-                  if (newsModel == null) {
+                  final newsModel = provider.newsChannelHeadline;
+
+                  if (newsModel == null || newsModel.totalResults == 0) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     return HorizontalNewsHeader(
                         height: height, width: width, news: newsModel);
                   }
                 }))),
-            // FutureBuilder(
-            //     future:
-            //         Provider.of<NewsProvider>(context).fetchCountryHeadline(),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return const Center(child: CircularProgressIndicator());
-            //       } else if (snapshot.hasError) {
-            //         return Center(child: Text(snapshot.error.toString()));
-            //       } else {
-            //         return VerticalNewsCard(
-            //             news: snapshot.data, height: height, width: width);
-            //       }
-            //     })
+            const SizedBox(
+              height: 5,
+            ),
+            const Text(
+              'Explore',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            FutureBuilder(
+                future: countryHeadline,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text(snapshot.error.toString()));
+                  } else {
+                    return VerticalNewsCard(
+                        news: snapshot.data, height: height, width: width);
+                  }
+                })
           ],
         ),
       ),

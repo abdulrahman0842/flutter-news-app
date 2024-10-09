@@ -39,21 +39,22 @@ class _CategoryPageState extends State<CategoryPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   log(snapshot.error.toString());
-                  return const Text(
-                      textAlign: TextAlign.center, 'Error has ocurred!');
+                  return Text(
+                    'Error has ocurred: ${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  );
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else {
-                  return ListView.builder(
-                      itemCount: snapshot.data!.articles!.length,
-                      itemBuilder: (context, index) {
-                        return VerticalNewsCard(
-                            news: snapshot.data, height: height, width: width);
-                      });
                 }
+                return ListView.builder(
+                    itemCount: snapshot.data!.articles!.length,
+                    itemBuilder: (context, index) {
+                      return VerticalNewsCard(
+                          news: snapshot.data, height: height, width: width);
+                    });
               }))
     ]);
   }

@@ -28,8 +28,9 @@ class CategoriesBanner extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    double cardHeight = height * 0.1;
     return SizedBox(
-      height: height * 0.10,
+      height: cardHeight,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: category.length,
@@ -38,18 +39,29 @@ class CategoriesBanner extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => CategoryPage(
-                              category: category[index],
-                            )));
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            CategoryPage(category: category[index]),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+
+                          return SlideTransition(
+                              position: animation.drive(tween), child: child);
+                        }));
               },
               child: Card(
                   shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
                   child: Stack(
                     children: [
                       Container(
-                        height: height * 0.10,
+                        height: cardHeight,
                         width: width * 0.48,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
@@ -60,7 +72,7 @@ class CategoriesBanner extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: height * 0.10,
+                        height: cardHeight,
                         width: width * 0.48,
                         decoration: BoxDecoration(
                           color: Colors.black54,

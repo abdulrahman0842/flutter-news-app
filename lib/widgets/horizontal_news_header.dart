@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing/models/news_model.dart';
+import 'package:testing/provider/article_localization.dart';
 import 'package:testing/screens/article_page.dart';
 import 'package:testing/screens/home.dart';
 
@@ -24,6 +25,9 @@ class HorizontalNewsHeader extends StatelessWidget {
         String publishedAtFormated =
             const Home().parseDate(article.publishedAt ?? 'Null');
         return InkWell(
+          onLongPress: () {
+            ArticleLocalization().toggleArticleHive(article);
+          },
           onTap: () {
             Navigator.push(
                 context,
@@ -35,27 +39,7 @@ class HorizontalNewsHeader extends StatelessWidget {
                     date: publishedAtFormated,
                     index: index,
                   ),
-                )
-                // PageRouteBuilder(
-                //     pageBuilder: (context, animation, secondaryAnimation) =>
-                //         ArticlePage(
-                //             article: article,
-                //             height: height,
-                //             width: width,
-                //             date: publishedAtFormated),
-                //     transitionsBuilder:
-                //         (context, animation, secondaryAnimation, child) {
-                //       const begin = Offset(1.0, 0.0);
-                //       const end = Offset.zero;
-                //       const curve = Curves.easeInOut;
-
-                //       var tween = Tween(begin: begin, end: end)
-                //           .chain(CurveTween(curve: curve));
-
-                //       return SlideTransition(
-                //           position: animation.drive(tween), child: child);
-                //     })
-                );
+                ));
           },
           child: Card(
             child: Hero(
