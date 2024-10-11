@@ -42,17 +42,19 @@ class HorizontalNewsHeader extends StatelessWidget {
                 ));
           },
           child: Card(
+            margin: const EdgeInsets.only(left: 12, right: 12),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Hero(
               tag: Key('${article.urlToImage} $index'),
               child: Container(
                 height: height * 0.55,
                 width: width * 0.75,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(article.urlToImage ??
-                            'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(
+                        article.urlToImage ??
+                        'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
                 child: Stack(children: [
                   Positioned(
                       bottom: height * 0.7 / 20,
@@ -64,7 +66,7 @@ class HorizontalNewsHeader extends StatelessWidget {
                         width: width * 0.7 / 1.2,
                         decoration: BoxDecoration(
                             color: const Color.fromARGB(122, 23, 37, 49),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                             border: Border.all(color: Colors.white)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

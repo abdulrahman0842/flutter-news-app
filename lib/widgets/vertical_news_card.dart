@@ -51,7 +51,7 @@ class VerticalNewsCard extends StatelessWidget {
                   Hero(
                       tag: Key('${article.urlToImage} $index'),
                       child: Container(
-                        height: height * 0.22,
+                        height: height * 0.20,
                         width: width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -66,7 +66,7 @@ class VerticalNewsCard extends StatelessWidget {
                         ),
                       )),
                   SizedBox(
-                    height: height * 0.22,
+                    height: height * 0.20,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(

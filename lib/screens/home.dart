@@ -28,26 +28,17 @@ enum FilterList { aljazeera, bbcnews, ndtv, reuters, arynews }
 
 class _HomeState extends State<Home> {
   FilterList? selectedSource;
-
-  late Future<NewsModel> countryHeadline;
-
   String newsSource = 'bbc-news';
 
   @override
   void initState() {
     super.initState();
     getChannelHeadline();
-    countryHeadline = fetchCountryHeadline();
   }
 
   Future<NewsModel> getChannelHeadline() async {
     return await Provider.of<NewsProvider>(context, listen: false)
         .fetchNewsChannelHeadline(newsSource);
-  }
-
-  Future<NewsModel> fetchCountryHeadline() {
-    return Provider.of<NewsProvider>(context, listen: false)
-        .fetchCountryHeadline();
   }
 
   @override
@@ -56,29 +47,9 @@ class _HomeState extends State<Home> {
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 255, 240),
       appBar: _buildAppBar(),
       body: SafeArea(child: _buildUI(height, width)),
-      // drawer: Drawer(
-      //   backgroundColor: MyTheme.lightTheme.primaryColor,
-      //   width: width * 0.75,
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Container(
-      //         height: height * 0.3,
-      //         decoration: const BoxDecoration(
-      //             color: Colors.blue,
-      //             image: DecorationImage(
-      //                 image: AssetImage('assets/images/profile.jpg'))),
-      //       ),
-      //       const Text('Abdul Rahman',
-      //           style: TextStyle(
-      //               fontSize: 23,
-      //               fontWeight: FontWeight.bold,
-      //               color: Colors.white))
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -195,21 +166,25 @@ class _HomeState extends State<Home> {
               height: 5,
             ),
             SizedBox(
-                height: height * 0.5,
+                height: height * 0.45,
                 width: width * 0.99,
                 child: Consumer<NewsProvider>(
                     builder: ((context, provider, child) {
+                  if (provider.isLoading!) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   final newsModel = provider.newsChannelHeadline;
 
                   if (newsModel == null || newsModel.totalResults == 0) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                        child: Text('No News Available with:$newsSource'));
                   } else {
                     return HorizontalNewsHeader(
                         height: height, width: width, news: newsModel);
                   }
                 }))),
             const SizedBox(
-              height: 5,
+              height: 10,
             ),
             const Text(
               'Explore',
@@ -222,7 +197,8 @@ class _HomeState extends State<Home> {
               height: 5,
             ),
             FutureBuilder(
-                future: countryHeadline,
+                future: Provider.of<NewsProvider>(context, listen: false)
+                    .fetchCountryHeadline(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());

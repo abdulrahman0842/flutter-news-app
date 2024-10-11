@@ -9,10 +9,11 @@ class NewsProvider with ChangeNotifier {
 
   NewsModel? _newsChannelHeadline;
   NewsModel? get newsChannelHeadline => _newsChannelHeadline;
-
-
+  bool? _isLoading = false;
+  bool? get isLoading => _isLoading;
 
   Future<NewsModel> fetchNewsChannelHeadline(String channelName) async {
+    _isLoading = true;
     String url =
         "https://newsapi.org/v2/top-headlines?sources=$channelName&apiKey=$apiKey";
     final response = await http.get(Uri.parse(url));
@@ -21,14 +22,16 @@ class NewsProvider with ChangeNotifier {
         final body = json.decode(response.body);
         _newsChannelHeadline = NewsModel.fromJson(body);
         log('request sent channel $channelName');
-        notifyListeners();
-        return newsChannelHeadline!;
       } else {
         throw Exception('Failed to Load data');
       }
     } catch (error) {
       throw Exception(error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
+    return newsChannelHeadline!;
   }
 
   Future<NewsModel> fetchCountryHeadline() async {
@@ -40,7 +43,6 @@ class NewsProvider with ChangeNotifier {
         final body = json.decode(response.body);
         log('request sent country');
         return NewsModel.fromJson(body);
-
       } else {
         throw Exception('Failed to Load data');
       }

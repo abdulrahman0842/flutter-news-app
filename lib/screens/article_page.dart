@@ -42,8 +42,10 @@ class ArticlePage extends StatelessWidget {
           ),
           Positioned(
               top: 10,
-              left: 5,
-              child: IconButton(
+              left: 10,
+              child: IconButton.outlined(
+                  style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.black54)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
