@@ -1,6 +1,6 @@
 # Flutter NewsApp
 
-Flutter NewsApp is a news application built using Flutter, fetching real-time news articles from [newsapi.org](https://newsapi.org/). The app allows users to browse news by categories, view detailed articles, and bookmark articles for offline reading. It integrates user authentication, state management, and offline storage for a seamless user experience.
+Flutter NewsApp is a news application built using Flutter, fetching real-time news articles from [newsapi.org](https://newsapi.org/). The app allows users to browse news by categories, view detailed articles, and bookmark articles for offline reading. It integrates state management, and offline storage for a seamless user experience.
 
 ## Features
 
