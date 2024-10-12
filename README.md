@@ -30,7 +30,7 @@ The news data is fetched from [newsapi.org](https://newsapi.org/) via API calls.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/abdulrahman0842/news_app.git
+   git clone https://github.com/abdulrahman0842/flutter-news-app.git
 2. Navigate to the project directory:
    ```bash
    cd street_mart
