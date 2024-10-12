@@ -4,10 +4,10 @@ Flutter NewsApp is a news application built using Flutter, fetching real-time ne
 
 ## Features
 
-- **Latest News:** Browse the latest news articles fetched from the NewsAPI.
+- **Latest News:** Browse the latest news articles fetched from the `NewsAPI`.
 - **Multiple Sources:** Read news articles from multiple sources or agencies.
 - **Category-Based News:** Access news articles filtered by categories such as technology, sports, and health.
-- **Bookmarking:** Bookmark articles to read later, even when offline, using Hive for local storage.
+- **Bookmarking:** Bookmark articles to read later, even when offline, using `Hive` for local storage.
 - **Offline Access:** View bookmarked articles without an internet connection.
 - **State Management:** Efficient state management using `Provider` for better performance.
 - **Future Updates:**
