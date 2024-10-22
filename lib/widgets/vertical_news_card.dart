@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/models/news_model.dart';
-import 'package:testing/screens/article_page.dart';
-import 'package:testing/screens/home.dart';
+import 'package:newsvibe/models/news_model.dart';
+import 'package:newsvibe/screens/home.dart';
+import 'package:newsvibe/screens/article_page.dart';
 
 class VerticalNewsCard extends StatelessWidget {
   const VerticalNewsCard({
@@ -44,65 +45,92 @@ class VerticalNewsCard extends StatelessWidget {
               },
               child: Card(
                 elevation: 12,
-                margin: EdgeInsets.all(8),
+                margin: const EdgeInsets.all(8),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
-                child: Stack(children: [
-                  Hero(
+                child: Stack(
+                  children: [
+                    Hero(
                       tag: Key('${article.urlToImage} $index'),
                       child: Container(
                         height: height * 0.20,
                         width: width,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(article.urlToImage ??
-                                    'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.black54),
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                      )),
-                  SizedBox(
-                    height: height * 0.20,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            article.title ?? 'UnAvailable',
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: Text(article.author ?? "Unknown",
-                                    maxLines: 2,
-                                    style: const TextStyle(color: Colors.blue)),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  publishedAtFormated.substring(0, 10),
-                                  style: const TextStyle(color: Colors.white),
+                        child: Stack(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: article.urlToImage ??
+                                  'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg',
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
+                              ),
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                    SizedBox(
+                      height: height * 0.20,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              article.title ?? 'Unavailable',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    article.author ?? "Unknown",
+                                    maxLines: 2,
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    publishedAtFormated.substring(0, 10),
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ));
         });
     // }

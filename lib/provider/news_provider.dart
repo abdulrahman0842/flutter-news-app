@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:testing/models/news_model.dart';
+import 'package:newsvibe/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
 class NewsProvider with ChangeNotifier {
@@ -35,8 +35,7 @@ class NewsProvider with ChangeNotifier {
   }
 
   Future<NewsModel> fetchCountryHeadline() async {
-    String url =
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey";
+    String url = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=$apiKey";
     final response = await http.get(Uri.parse(url));
     try {
       if (response.statusCode == 200) {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:testing/models/news_model.dart';
-import 'package:testing/provider/article_localization.dart';
-import 'package:testing/screens/article_page.dart';
-import 'package:testing/screens/home.dart';
+import 'package:newsvibe/models/news_model.dart';
+import 'package:newsvibe/provider/article_localization.dart';
+import 'package:newsvibe/provider/custom_theme.dart';
+import 'package:newsvibe/screens/article_page.dart';
+import 'package:newsvibe/screens/home.dart';
 
 class BookMarkedArticlesPage extends StatefulWidget {
   const BookMarkedArticlesPage({super.key});
@@ -17,8 +18,14 @@ class _BookMarkedArticlesPageState extends State<BookMarkedArticlesPage> {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 255, 240),
       appBar: AppBar(
-        title: const Text("Bookmarks"),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: MyTheme.lightTheme.primaryColor,
+        title: const Text(
+          "Bookmarks",
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -26,7 +33,9 @@ class _BookMarkedArticlesPageState extends State<BookMarkedArticlesPage> {
                 ArticleLocalization().clearBox();
               });
             },
-            icon: const Icon(Icons.clear_all_sharp),
+            icon: const Icon(
+              Icons.clear_all_sharp,
+            ),
           )
         ],
       ),

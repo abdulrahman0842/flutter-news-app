@@ -1,5 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/screens/category_page.dart';
+import 'package:newsvibe/screens/category_page.dart';
 
 class CategoriesBanner extends StatelessWidget {
   CategoriesBanner({
@@ -65,10 +66,25 @@ class CategoriesBanner extends StatelessWidget {
                         width: width * 0.48,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(img[index]),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: img[index],
+                          imageBuilder: (context, imageProvider) => Container(
+                            height: cardHeight,
+                            width: width * 0.48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                       Container(

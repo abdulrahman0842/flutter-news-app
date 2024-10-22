@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:hive/hive.dart';
-import 'package:testing/models/news_model.dart';
+import 'package:newsvibe/models/news_model.dart';
 
 class ArticleLocalization {
   getKeys() {

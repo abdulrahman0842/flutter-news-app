@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/models/news_model.dart';
-import 'package:testing/provider/article_localization.dart';
-import 'package:testing/provider/custom_theme.dart';
+import 'package:newsvibe/models/news_model.dart';
+import 'package:newsvibe/provider/article_localization.dart';
+import 'package:newsvibe/provider/custom_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ArticlePage extends StatelessWidget {
@@ -29,15 +30,30 @@ class ArticlePage extends StatelessWidget {
         children: [
           Hero(
             tag: Key('${article.urlToImage} $index'),
-            child: Container(
-              height: height * 0.4,
-              width: width,
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(article.urlToImage ??
-                          'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+            child:
+                // Container(
+                //   height: height * 0.4,
+                //   width: width,
+                //   decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //           fit: BoxFit.cover,
+                //           image: NetworkImage(article.urlToImage ??
+                //               'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg'))),
+                // )
+                CachedNetworkImage(
+              imageUrl: article.urlToImage ??
+                  'https://img.freepik.com/premium-photo/street-new-york-city-view-beautiful_389847-8.jpg',
+              imageBuilder: (context, imageProvider) => Container(
+                height: height * 0.4,
+                width: width,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover)),
+              ),
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           Positioned(

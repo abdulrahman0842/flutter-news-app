@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:testing/provider/custom_theme.dart';
-import 'package:testing/provider/news_provider.dart';
-import 'package:testing/widgets/vertical_news_card.dart';
+import 'package:newsvibe/provider/custom_theme.dart';
+import 'package:newsvibe/provider/news_provider.dart';
+import 'package:newsvibe/widgets/vertical_news_card.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key, required this.category});

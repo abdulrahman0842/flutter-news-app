@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:testing/models/news_model.dart';
-import 'package:testing/provider/custom_theme.dart';
-import 'package:testing/provider/news_provider.dart';
-import 'package:testing/screens/home.dart';
+import 'package:newsvibe/models/news_model.dart';
+import 'package:newsvibe/provider/custom_theme.dart';
+import 'package:newsvibe/provider/news_provider.dart';
+import 'package:newsvibe/screens/home.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
