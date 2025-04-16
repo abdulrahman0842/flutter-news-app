@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   http:
   cached_network_image:
-  path_provider:
+  # path_provider:
   google_fonts:
 
   # The following adds the Cupertino Icons font to your application.
