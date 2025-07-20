@@ -15,7 +15,15 @@ A simple and modern Flutter news application that fetches real-time news headlin
 
 ## 🚀 Screenshots
 
-> _You can add app screenshots here_
+## 📸 Screenshots
+
+<p float="left">
+  <img src="screenshots/home_page.jpg" width="200"/>
+  <img src="screenshots/news_page.jpg" width="200"/>
+  <img src="screenshots/bookmark_page.jpg" width="200"/>
+  <img src="screenshots/category_wise.jpg" width="200"/>
+</p>
+
 
 ## 🧰 Tech Stack
 
