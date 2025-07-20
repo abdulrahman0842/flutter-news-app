@@ -6,10 +6,10 @@ A simple and modern Flutter news application that fetches real-time news headlin
 
 - Fetch top headlines from NewsAPI
 - Browse news by category (e.g., Business, Sports, Health)
-- News from different countries (default: India 🇮🇳)
 - Channel-specific news support
 - Horizontal and vertical news layouts
-- Bookmark and read later (optional)
+- Bookmark and read later
+- Offline Support
 - Responsive UI and error handling
 - Built using Provider for state management
 
